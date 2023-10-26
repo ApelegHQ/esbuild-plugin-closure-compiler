@@ -1,0 +1,26 @@
+{
+	"compilerOptions": {
+		"target": "es6",
+		"module": "esnext",
+		"moduleResolution": "node",
+		"outDir": "dist",
+		"strict": true,
+		"strictNullChecks": true,
+		"alwaysStrict": true,
+		"noUnusedLocals": true,
+		"esModuleInterop": true,
+		"skipLibCheck": false,
+		"forceConsistentCasingInFileNames": true,
+		"resolveJsonModule": false,
+		"lib": ["es6", "ES2019.object", "dom"],
+		"declaration": true
+	},
+	"ts-node": {
+		"experimentalResolver": true
+	},
+	"include": ["src/**/*"],
+	"exclude": [
+		"node_modules",
+		"build"
+	]
+}
