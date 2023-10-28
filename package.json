@@ -1,6 +1,6 @@
 {
   "name": "@exact-realty/esbuild-plugin-closure-compiler",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "esbuild plugin for compiling with Google Closure Compiler as the last step",
   "main": "./dist/index.cjs",
   "module": "./dist/index.mjs",

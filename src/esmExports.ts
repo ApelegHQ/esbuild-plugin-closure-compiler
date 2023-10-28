@@ -17,14 +17,14 @@ const preprocess = (text: string): string =>
 	text
 		.replace(
 			/export\s+default\b/g,
-			'/** @nocollapse */globalThis.__reserved__["%export"]["default"]=',
+			'/** @nocollapse */globalThis["__reserved__"]["%export"]["default"]=',
 		)
 		.replace(/export\s*{([^}]+)}/g, (_, p1: string) => {
 			return p1
 				.split(',')
 				.map(
 					(e) =>
-						'/** @nocollapse */globalThis.__reserved__["%export"]' +
+						'/** @nocollapse */globalThis["__reserved__"]["%export"]' +
 						(/\sas\s/.test(e)
 							? e.replace(/(.+)\sas\s(.+)/, (_, p1, p2) => {
 									return `[${JSON.stringify(

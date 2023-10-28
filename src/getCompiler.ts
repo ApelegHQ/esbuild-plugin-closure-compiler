@@ -15,14 +15,22 @@
 
 import type esbuild from 'esbuild';
 import googleClosureCompiler from 'google-closure-compiler';
+import * as esmDynamicImports from './esmDynamicImports.js';
 import * as esmExports from './esmExports.js';
 import * as esmImports from './esmImports.js';
-import * as esmDynamicImports from './esmDynamicImports.js';
 import * as umdExports from './umdExports.js';
+
+/* The following functions ensure that external code can include __reserved__
+ in it, without causing interference with the preprocessing and postprocessing
+ functions
+ */
+const preprocessReserved = (x: string) => x.replace(/(__reserved__)/g, '_$1_');
+const postprocessReserved = (x: string) => x.replace(/_(__reserved__)_/g, '$1');
 
 const esm = {
 	preprocess: (x: string): string => {
 		return [
+			preprocessReserved,
 			esmDynamicImports.preprocess,
 			esmExports.preprocess,
 			esmImports.preprocess,
@@ -33,22 +41,25 @@ const esm = {
 			esmDynamicImports.postprocess,
 			esmExports.postprocess,
 			esmImports.postprocess,
+			postprocessReserved,
 		].reduce((acc, cv) => cv(acc), x);
 	},
 };
 
 const umd = {
 	preprocess: (x: string): string => {
-		return [esmDynamicImports.preprocess, umdExports.preprocess].reduce(
-			(acc, cv) => cv(acc),
-			x,
-		);
+		return [
+			preprocessReserved,
+			esmDynamicImports.preprocess,
+			umdExports.preprocess,
+		].reduce((acc, cv) => cv(acc), x);
 	},
 	postprocess: (x: string): string => {
-		return [esmDynamicImports.postprocess, umdExports.postprocess].reduce(
-			(acc, cv) => cv(acc),
-			x,
-		);
+		return [
+			esmDynamicImports.postprocess,
+			umdExports.postprocess,
+			postprocessReserved,
+		].reduce((acc, cv) => cv(acc), x);
 	},
 };
 
@@ -60,34 +71,39 @@ const getCompiler = (
 
 	const buildModule = esmOutput ? esm : umd;
 
-	const compiler = new googleClosureCompiler.compiler({
-		language_in: 'ECMASCRIPT_2020',
-		language_out: 'ECMASCRIPT_2015',
-		env: 'BROWSER',
-		...compilerOptions,
-		rewrite_polyfills: false,
-		process_closure_primitives: false,
-		apply_input_source_maps: false,
-		warning_level: 'QUIET',
-		isolate_polyfills: true,
-		assume_function_wrapper: esmOutput,
-	});
+	// A new instance is needed every time because of how the command lines
+	// are constructed
+	const compilerFactory = () =>
+		new googleClosureCompiler.compiler({
+			language_in: 'ECMASCRIPT_2020',
+			language_out: 'ECMASCRIPT_2015',
+			env: 'BROWSER',
+			...compilerOptions,
+			rewrite_polyfills: false,
+			process_closure_primitives: false,
+			apply_input_source_maps: false,
+			warning_level: 'QUIET',
+			isolate_polyfills: true,
+			assume_function_wrapper: esmOutput,
+		});
 
 	return (text: string) => {
 		text = buildModule.preprocess(text);
 
 		return new Promise<string>((resolve, reject) => {
-			const process = compiler.run((exitCode, stdout, stderr) => {
-				if (exitCode === 0) {
-					// TODO: Warnings
-					stdout = buildModule.postprocess(stdout);
+			const process = compilerFactory().run(
+				(exitCode, stdout, stderr) => {
+					if (exitCode === 0) {
+						// TODO: Warnings
+						stdout = buildModule.postprocess(stdout);
 
-					resolve(stdout);
-				} else {
-					// TODO: Better error handing
-					return reject(new Error(stderr));
-				}
-			});
+						resolve(stdout);
+					} else {
+						// TODO: Better error handing
+						return reject(new Error(stderr));
+					}
+				},
+			);
 
 			if (!process.stdin) {
 				process.kill();

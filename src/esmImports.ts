@@ -22,7 +22,7 @@ const preprocess = (text: string): string =>
 			importExpressionRegex,
 			(_, defaultExport, starName, namedImports, from, moduleName) => {
 				return (
-					'/** @nocollapse */ globalThis.__reserved__["%import_start"]();' +
+					'/** @nocollapse */ globalThis["__reserved__"]["%import_start"]();' +
 					`${
 						from
 							? `const {${[
@@ -35,8 +35,8 @@ const preprocess = (text: string): string =>
 									.filter(Boolean)
 									.join(',')}}=`
 							: ''
-					}globalThis.__reserved__["%import"](${moduleName});` +
-					'/** @nocollapse */ globalThis.__reserved__["%import_end"]()'
+					}globalThis["__reserved__"]["%import"](${moduleName});` +
+					'/** @nocollapse */ globalThis["__reserved__"]["%import_end"]()'
 				);
 			},
 		)
@@ -45,7 +45,7 @@ const preprocess = (text: string): string =>
 				.split(',')
 				.map(
 					(e) =>
-						'/** @nocollapse */globalThis.__reserved__["%export"]' +
+						'/** @nocollapse */globalThis["__reserved__"]["%export"]' +
 						(/\sas\s/.test(e)
 							? e.replace(/(.+)\sas\s(.+)/, (_, p1, p2) => {
 									return `[${JSON.stringify(

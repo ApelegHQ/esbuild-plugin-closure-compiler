@@ -19,7 +19,7 @@ const dymamicImportExpressionRegex =
 const preprocess = (text: string): string =>
 	text.replace(
 		dymamicImportExpressionRegex,
-		'globalThis.__reserved__["%dymamic_import%"]',
+		'globalThis["__reserved__"]["%dymamic_import%"]',
 	);
 
 const postprocess = (text: string): string => {
