@@ -28,6 +28,7 @@ import type { CompileOptions } from 'google-closure-compiler';
 export default (compilerOptions?: CompileOptions): esbuild.Plugin => {
 	const name = '@exact-realty/esbuild-plugin-closure-compiler';
 	const textEncoder = new TextEncoder();
+	const textDecoder = new TextDecoder();
 
 	const plugin: esbuild.Plugin = {
 		name,
@@ -63,8 +64,21 @@ export default (compilerOptions?: CompileOptions): esbuild.Plugin => {
 								await compiler(outputFile.text),
 							);
 
-							meta.bytes = compiledText.byteLength;
-							outputFile.contents = compiledText;
+							Object.defineProperty(meta, 'bytes', {
+								get: () => compiledText.byteLength,
+							});
+							Object.defineProperties(outputFile, {
+								['contents']: {
+									get: () => {
+										return compiledText;
+									},
+								},
+								['text']: {
+									get: () => {
+										return textDecoder.decode(compiledText);
+									},
+								},
+							});
 						},
 					),
 				);
