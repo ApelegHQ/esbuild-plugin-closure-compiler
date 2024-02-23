@@ -30,7 +30,7 @@ const preprocess = (text: string): string =>
 									return `[${JSON.stringify(
 										p2.trim(),
 									)}]=${p1}`;
-							  })
+								})
 							: `[${JSON.stringify(e.trim())}]=${e}`),
 				)
 				.join(';');

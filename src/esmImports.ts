@@ -31,7 +31,7 @@ const preprocess = (text: string): string =>
 										: '',
 									namedImports?.replace(/as\s/g, ':'),
 									starName ? `...${starName}` : '',
-							  ]
+								]
 									.filter(Boolean)
 									.join(',')}}=`
 							: ''
@@ -51,7 +51,7 @@ const preprocess = (text: string): string =>
 									return `[${JSON.stringify(
 										p2.trim(),
 									)}]=${p1}`;
-							  })
+								})
 							: `[${JSON.stringify(e.trim())}]=${e}`),
 				)
 				.join(';');
