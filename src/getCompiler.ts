@@ -63,13 +63,21 @@ const umd = {
 	},
 };
 
+const iife = {
+	preprocess: preprocessReserved,
+	postprocess: (x: string): string => {
+		return '~function(){' + postprocessReserved(x) + '}();';
+	},
+};
+
 const getCompiler = (
 	config: esbuild.BuildOptions,
 	compilerOptions?: googleClosureCompiler.CompileOptions,
 ) => {
 	const esmOutput = config.format === 'esm';
 
-	const buildModule = esmOutput ? esm : umd;
+	const buildModule =
+		config.format === 'esm' ? esm : config.format === 'cjs' ? umd : iife;
 
 	// A new instance is needed every time because of how the command lines
 	// are constructed
