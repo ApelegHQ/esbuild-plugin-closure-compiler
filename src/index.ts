@@ -1,4 +1,4 @@
-/* Copyright © 2023 Exact Realty Limited. All rights reserved.
+/* Copyright © 2023 Apeleg Limited. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License") with LLVM
  * exceptions; you may not use this file except in compliance with the
@@ -26,7 +26,7 @@ import getCompiler from './getCompiler.js';
 import type { CompileOptions } from 'google-closure-compiler';
 
 export default (compilerOptions?: CompileOptions): esbuild.Plugin => {
-	const name = '@exact-realty/esbuild-plugin-closure-compiler';
+	const name = '@apeleghq/esbuild-plugin-closure-compiler';
 	const textEncoder = new TextEncoder();
 	const textDecoder = new TextDecoder();
 

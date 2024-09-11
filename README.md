@@ -5,14 +5,14 @@
  [![Bugs](https://sonarcloud.io/api/project_badges/measure?project=Exact-Realty_esbuild-plugin-closure-compiler&metric=bugs)](https://sonarcloud.io/summary/new_code?id=Exact-Realty_esbuild-plugin-closure-compiler)
  [![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=Exact-Realty_esbuild-plugin-closure-compiler&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=Exact-Realty_esbuild-plugin-closure-compiler)
  [![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=Exact-Realty_esbuild-plugin-closure-compiler&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=Exact-Realty_esbuild-plugin-closure-compiler)
- ![NPM Downloads](https://img.shields.io/npm/dw/@exact-realty/esbuild-plugin-closure-compiler?style=flat-square)
+ ![NPM Downloads](https://img.shields.io/npm/dw/@apeleghq/esbuild-plugin-closure-compiler?style=flat-square)
 
 ## How to use
 
 ### Installing
 
 ```sh
-npm i -D @exact-realty/esbuild-plugin-closure-compiler
+npm i -D @apeleghq/esbuild-plugin-closure-compiler
 ```
 
 ### Configuring esbuild
@@ -20,13 +20,13 @@ npm i -D @exact-realty/esbuild-plugin-closure-compiler
 In the file you have your configuration, first import this plugin
 
 ```js
-const cc = require('@exact-realty/esbuild-plugin-closure-compiler');
+const cc = require('@apeleghq/esbuild-plugin-closure-compiler');
 ```
 
 Or using ES module syntax:
 
 ```js
-import cc from '@exact-realty/esbuild-plugin-closure-compiler';
+import cc from '@apeleghq/esbuild-plugin-closure-compiler';
 ```
 
 Then, in your esbuild configuration, add `cc()` to the `plugins` list. `cc`
@@ -35,7 +35,7 @@ reference, refer to the documentation for Google Closure Compiler). Minimal exam
 
 ```js
 const esbuild = require('esbuild');
-const cc = require('@exact-realty/esbuild-plugin-closure-compiler');
+const cc = require('@apeleghq/esbuild-plugin-closure-compiler');
 
 await esbuild
 	.build({
