@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-`
+void `
 TODOS:
 - Errors and warnings
 - Support for sourcemaps
