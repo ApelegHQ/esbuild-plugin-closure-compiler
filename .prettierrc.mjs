@@ -14,10 +14,10 @@
  */
 
 export default {
-  semi: true,
-  trailingComma: "all",
-  singleQuote: true,
-  printWidth: 80,
-  tabWidth: 4,
-  useTabs: true,
+	semi: true,
+	trailingComma: 'all',
+	singleQuote: true,
+	printWidth: 80,
+	tabWidth: 4,
+	useTabs: true,
 };

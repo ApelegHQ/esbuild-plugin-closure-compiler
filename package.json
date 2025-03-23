@@ -1,6 +1,6 @@
 {
   "name": "@apeleghq/esbuild-plugin-closure-compiler",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "esbuild plugin for compiling with Google Closure Compiler as the last step",
   "main": "./dist/index.cjs",
   "module": "./dist/index.mjs",
@@ -30,21 +30,23 @@
   "author": "Apeleg Limited",
   "license": "Apache-2.0 WITH LLVM-exception",
   "devDependencies": {
+    "@eslint/js": "^9.23.0",
     "@types/google-closure-compiler": "^20231112.0.0",
-    "@types/node": "^22.5.4",
-    "@typescript-eslint/eslint-plugin": "^8.5.0",
-    "@typescript-eslint/parser": "^8.5.0",
-    "esbuild": "^0.23.1",
-    "eslint": "^8.56.0",
-    "eslint-config-prettier": "^9.1.0",
-    "eslint-plugin-prettier": "^5.2.1",
+    "@types/node": "^22.13.11",
+    "@typescript-eslint/eslint-plugin": "^8.27.0",
+    "@typescript-eslint/parser": "^8.27.0",
+    "esbuild": "^0.25.1",
+    "eslint": "^9.23.0",
+    "eslint-config-prettier": "^10.1.1",
+    "eslint-plugin-prettier": "^5.2.3",
+    "globals": "^16.0.0",
     "google-closure-compiler": "^20240317.0.0",
     "prettier": "^3.3.3",
     "ts-node": "^10.9.2",
-    "typescript": "^5.6.2"
+    "typescript": "^5.8.2"
   },
   "peerDependencies": {
-    "esbuild": "^0.17.0 || ^0.18.0 || ^0.19.0 || ^0.20.0 || ^0.21.0 || ^0.22.0|| ^0.23.0",
+    "esbuild": "^0.17.0 || ^0.18.0 || ^0.19.0 || ^0.20.0 || ^0.21.0 || ^0.22.0|| ^0.23.0 || ^0.24.0 || ^0.25.0",
     "google-closure-compiler": "*"
   },
   "keywords": [
