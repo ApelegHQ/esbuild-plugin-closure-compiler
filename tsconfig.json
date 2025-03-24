@@ -1,8 +1,8 @@
 {
 	"compilerOptions": {
-		"target": "es6",
-		"module": "esnext",
-		"moduleResolution": "node",
+		"target": "ES2017",
+		"module": "NodeNext",
+		"moduleResolution": "NodeNext",
 		"outDir": "dist",
 		"strict": true,
 		"strictNullChecks": true,
