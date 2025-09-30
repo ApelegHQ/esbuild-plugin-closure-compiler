@@ -70,6 +70,15 @@ const iife = {
 	},
 };
 
+// Earlier compiler versions expose a `.compiler` constructor
+const compilerCtor = (typeof googleClosureCompiler.compiler === 'function'
+	? googleClosureCompiler.compiler
+	: typeof googleClosureCompiler === 'function'
+		? googleClosureCompiler
+		: () => {
+				throw new Error('Unable to import compiler');
+			}) as unknown as (typeof googleClosureCompiler)['compiler'];
+
 const getCompiler = (
 	config: esbuild.BuildOptions,
 	compilerOptions?: googleClosureCompiler.CompileOptions,
@@ -82,7 +91,7 @@ const getCompiler = (
 	// A new instance is needed every time because of how the command lines
 	// are constructed
 	const compilerFactory = () =>
-		new googleClosureCompiler.compiler({
+		new compilerCtor({
 			language_in: 'ECMASCRIPT_2020',
 			language_out: 'ECMASCRIPT_2015',
 			env: 'BROWSER',
