@@ -20,6 +20,10 @@ jobs:
         with:
           node-version: 24
           registry-url: https://registry.npmjs.org/
+      - uses: actions/setup-java@99b8673ff64fbf99d8d325f52d9a5bdedb8483e9
+        with:
+          distribution: 'microsoft'
+          java-version: '21'
       - run: npm ci
       - run: npm publish --provenance --access public
         env:
